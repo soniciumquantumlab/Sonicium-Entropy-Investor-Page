@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonicium Entropy — Quantum-Seeded Infrastructure | Investor Brief</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'playfair': ['"Playfair Display"', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'army': {
+                            50: '#f4f6f0', 100: '#e4e9d8', 200: '#cbd4b3', 300: '#a8b884',
+                            400: '#889c5e', 500: '#6b7f45', 600: '#546536', 700: '#414f2c',
+                            800: '#364027', 900: '#2e3723', 950: '#171d10',
+                        },
+                        'brass': {
+                            50: '#fdf9ec', 100: '#f9efc8', 200: '#f2dd8d', 300: '#e9c452',
+                            400: '#e0ad2c', 500: '#c8921e', 600: '#a87216', 700: '#855415',
+                            800: '#6f4318', 900: '#5e3919',
+                        },
+                        'parchment': '#f5f2e8',
+                        'deep': '#171d10',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #171d10; color: #d6dbc9; }
+        h1, h2, h3, .heading-font { font-family: 'Playfair Display', serif; }
+        .glass-card {
+            background: rgba(244, 246, 240, 0.035);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(200, 146, 30, 0.14);
+            box-shadow: 0 10px 40px -20px rgba(0,0,0,0.8);
+        }
+        .glass-light { background: rgba(244, 246, 240, 0.06); border: 1px solid rgba(200, 146, 30, 0.18); }
+        .brass-rule { height: 2px; background: linear-gradient(90deg, transparent, #c8921e 20%, #e9c452 50%, #c8921e 80%, transparent); }
+        .hero-gradient {
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 0%, rgba(65,79,44,0.55) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 85% 20%, rgba(200,146,30,0.10) 0%, transparent 60%),
+                linear-gradient(180deg, #1c2416 0%, #171d10 100%);
+        }
+        .section-divider { background: linear-gradient(90deg, transparent, rgba(200,146,30,0.35), transparent); height: 1px; }
+        .text-gradient-brass { background: linear-gradient(120deg, #e9c452, #c8921e 60%, #e0ad2c); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .chart-bar { transition: height 1s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal.visible { opacity: 1; transform: none; }
+        @keyframes floatSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .float-slow { animation: floatSlow 7s ease-in-out infinite; }
+        @keyframes pulseDot { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(136,156,94,0.5); } 50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(136,156,94,0); } }
+        .pulse-dot { animation: pulseDot 2.4s ease-in-out infinite; }
+        @keyframes brassShimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        .shimmer { background-size: 200% 100%; animation: brassShimmer 6s linear infinite; }
+        .news-card { transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .35s, box-shadow .35s; }
+        .news-card:hover { transform: translateY(-6px); border-color: rgba(233,196,82,0.45); box-shadow: 0 24px 50px -24px rgba(0,0,0,0.9); }
+        .btn-brass { background: linear-gradient(120deg, #c8921e, #e0ad2c 55%, #c8921e); color: #171d10; transition: all .3s ease; box-shadow: 0 8px 28px -10px rgba(200,146,30,0.55); }
+        .btn-brass:hover { transform: translateY(-2px); box-shadow: 0 14px 36px -10px rgba(224,173,44,0.65); filter: brightness(1.07); }
+        .stat-number { font-variant-numeric: tabular-nums; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #171d10; }
+        ::-webkit-scrollbar-thumb { background: #414f2c; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6b7f45; }
+        .watermark { position: absolute; pointer-events: none; user-select: none; font-family: 'Playfair Display', serif; color: rgba(200,146,30,0.035); font-weight: 900; line-height: 0.85; letter-spacing: -0.02em; }
+        .test-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
+        .pass-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: rgba(107,127,69,0.25); color: #a8b884; border: 1px solid rgba(107,127,69,0.4); }
+        .fail-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: rgba(200,50,50,0.15); color: #e88; border: 1px solid rgba(200,50,50,0.3); }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50" style="background: rgba(23,29,16,0.82); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(200,146,30,0.15);">
+        <div class="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-md flex items-center justify-center relative overflow-hidden" style="background: linear-gradient(135deg, #414f2c, #2e3723); border: 1px solid rgba(200,146,30,0.45);">
+                    <span class="heading-font text-brass-300 font-bold text-lg">S</span>
+                </div>
+                <div class="leading-tight">
+                    <span class="heading-font text-lg font-bold tracking-wide text-parchment">Sonicium <span class="text-brass-300">Entropy</span></span>
+                    <div class="text-[9px] tracking-[0.25em] uppercase text-army-300/70">Quantum Resilience</div>
+                </div>
+            </div>
+            <div class="hidden lg:flex items-center gap-8 text-[13px] font-medium tracking-wide text-army-200/80">
+                <a href="#problem" class="hover:text-brass-300 transition-colors">The Crisis</a>
+                <a href="#market" class="hover:text-brass-300 transition-colors">Market</a>
+                <a href="#technology" class="hover:text-brass-300 transition-colors">Technology</a>
+                <a href="#validation" class="hover:text-brass-300 transition-colors">Validation</a>
+                <a href="#roadmap" class="hover:text-brass-300 transition-colors">Roadmap</a>
+                <a href="#news" class="hover:text-brass-300 transition-colors">PQC News</a>
+                <a href="mailto:research@sonicium.ltd" class="hover:text-brass-300 transition-colors">Contact</a>
+            </div>
+            <a href="https://soniciumentropy.com/" target="_blank" class="btn-brass hidden sm:inline-flex items-center gap-2 text-[13px] font-semibold px-5 py-2.5 rounded-md">
+                Request API Access
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero-gradient relative pt-36 pb-24 px-6 overflow-hidden">
+        <div class="watermark text-[22vw] top-24 right-[-4vw] hidden md:block">SE</div>
+        <div class="absolute top-0 left-0 right-0 h-px brass-rule opacity-60"></div>
+        <div class="max-w-7xl mx-auto relative">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <div class="inline-flex items-center gap-2.5 glass-light rounded-full px-4 py-1.5 text-[11px] font-semibold tracking-[0.14em] uppercase text-army-200 mb-7">
+                        <span class="w-2 h-2 rounded-full bg-army-300 pulse-dot"></span>
+                        100% NIST SP 800-22 &amp; 800-90B Compliant
+                        <span class="w-px h-3 bg-brass-500/50"></span>
+                        RJSC C-214088/2026
+                    </div>
+                    <h1 class="heading-font text-5xl md:text-6xl lg:text-[4.4rem] font-bold leading-[1.06] text-parchment mb-6">
+                        Quantum-Seeded <span class="text-gradient-brass shimmer" style="background-image: linear-gradient(120deg,#e9c452,#c8921e,#e0ad2c,#e9c452); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;">Entropy</span><br class="hidden md:block">
+                        for the Post-Quantum Enterprise.
+                    </h1>
+                    <div class="brass-rule w-24 mb-7"></div>
+                    <p class="text-army-100/70 text-[15px] md:text-base leading-relaxed mb-9 max-w-xl">
+                        Sonicium Entropy delivers NIST SP 800-90A DRBG output seeded exclusively by 63 and 135-qubit IBM Heron quantum measurements — up to 18,026 Mbps, full execution provenance on every API response, and 100% NIST SP 800-22 pass rate across 15/15 statistical tests.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://soniciumentropy.com/" target="_blank" class="btn-brass font-semibold px-8 py-3.5 rounded-md inline-flex items-center gap-2 text-sm">
+                            Explore Platform
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                        <a href="#validation" class="glass-light hover:bg-white/5 text-parchment font-semibold px-8 py-3.5 rounded-md transition border text-sm">
+                            View Full Test Results
+                        </a>
+                    </div>
+                    <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px] text-army-200/60">
+                        <span>Chief Scientist &amp; Chairman: <strong class="text-parchment/90 font-medium">Hussain Billah</strong></span>
+                        <span class="w-px h-3.5 bg-brass-600/40 hidden sm:block"></span>
+                        <span>Founded 2023 · Incorporated 2026</span>
+                        <span class="w-px h-3.5 bg-brass-600/40 hidden sm:block"></span>
+                        <a href="mailto:research@sonicium.ltd" class="hover:text-brass-300 transition">research@sonicium.ltd</a>
+                    </div>
+                </div>
+                <div class="relative reveal float-slow">
+                    <div class="glass-card rounded-2xl p-6 md:p-8">
+                        <div class="flex items-center justify-between mb-6 pb-4 border-b border-brass-600/15">
+                            <span class="text-[10px] font-semibold text-army-200/70 uppercase tracking-[0.2em]">NIST SP 800-22 · Q135 Test Results</span>
+                            <span class="flex items-center gap-1.5 text-[10px] text-army-300 uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-army-300 pulse-dot"></span> 15/15 Passed</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3.5 mb-6">
+                            <div class="bg-deep/70 rounded-lg p-4 border border-brass-600/10">
+                                <div class="text-3xl font-bold text-parchment stat-number">100<span class="text-brass-400 text-xl">%</span></div>
+                                <div class="text-[10px] text-army-200/60 mt-1 tracking-wide uppercase">NIST SP 800-22 Pass Rate</div>
+                            </div>
+                            <div class="bg-deep/70 rounded-lg p-4 border border-brass-600/10">
+                                <div class="text-3xl font-bold text-parchment stat-number">15<span class="text-brass-400 text-lg">/15</span></div>
+                                <div class="text-[10px] text-army-200/60 mt-1 tracking-wide uppercase">Statistical Tests Passed</div>
+                            </div>
+                            <div class="bg-deep/70 rounded-lg p-4 border border-brass-600/10">
+                                <div class="text-3xl font-bold text-parchment stat-number">0.99998</div>
+                                <div class="text-[10px] text-army-200/60 mt-1 tracking-wide uppercase">Min-Entropy (800-90B)</div>
+                            </div>
+                            <div class="bg-deep/70 rounded-lg p-4 border border-brass-600/10">
+                                <div class="text-3xl font-bold text-parchment stat-number">A+</div>
+                                <div class="text-[10px] text-army-200/60 mt-1 tracking-wide uppercase">Security Grade</div>
+                            </div>
+                        </div>
+                        <div class="text-[10px] text-army-200/50 uppercase tracking-[0.15em] mb-2.5">Throughput Comparison (Mbps)</div>
+                        <div class="space-y-2.5">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-24 text-[10px] text-army-100/80 font-medium">Sonicium 135Q</span>
+                                <div class="flex-1 h-2.5 bg-army-900/60 rounded-full overflow-hidden">
+                                    <div class="h-full rounded-full shimmer" style="width:100%; background-image: linear-gradient(90deg,#c8921e,#e9c452,#c8921e); background-size:200% 100%;"></div>
+                                </div>
+                                <span class="text-[10px] text-brass-300 w-16 text-right font-medium">18,026</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-24 text-[10px] text-army-200/50">IDQ Quantis PCIe</span>
+                                <div class="flex-1 h-2.5 bg-army-900/60 rounded-full overflow-hidden">
+                                    <div class="h-full bg-army-600/70 rounded-full" style="width:1.3%"></div>
+                                </div>
+                                <span class="text-[10px] text-army-200/40 w-16 text-right">240</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-24 text-[10px] text-army-200/50">Quintessence qStream</span>
+                                <div class="flex-1 h-2.5 bg-army-900/60 rounded-full overflow-hidden">
+                                    <div class="h-full bg-army-600/50 rounded-full" style="width:0.55%"></div>
+                                </div>
+                                <span class="text-[10px] text-army-200/40 w-16 text-right">100</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 section-divider"></div>
+    </section>
+
+    <section id="problem" class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="max-w-3xl mb-16 reveal">
+                <span class="text-brass-400 text-[11px] font-semibold tracking-[0.25em] uppercase">The Infrastructural Crisis</span>
+                <h2 class="heading-font text-4xl md:text-5xl font-bold text-parchment mt-3 mb-5">Cloud Native Entropy Starvation</h2>
+                <div class="brass-rule w-20 mb-6"></div>
+                <p class="text-army-100/65 text-[15px] leading-relaxed">
+                    Virtualized, containerized, and zero-trust service mesh architectures have eliminated the physical interrupts (<code class="text-brass-300 text-xs bg-army-900/60 px-1.5 py-0.5 rounded">/dev/random</code>) that traditional kernels rely on. Simultaneous boot storms and high-concurrency mTLS handshakes exhaust host entropy pools, forcing weak PRNG fallbacks or blocking boot sequences entirely.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card rounded-xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-5">
+                        <svg class="w-6 h-6 text-red-400/90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    </div>
+                    <h3 class="heading-font text-parchment font-semibold text-xl mb-3">virtio-rng Saturation</h3>
+                    <p class="text-army-100/55 text-sm leading-relaxed">During auto-scaling events, hundreds of containers boot simultaneously. The host virtio-rng interface saturates, causing kernel blocks or predictable seed usage.</p>
+                </div>
+                <div class="glass-card rounded-xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-lg bg-brass-500/10 border border-brass-500/20 flex items-center justify-center mb-5">
+                        <svg class="w-6 h-6 text-brass-400/90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="heading-font text-parchment font-semibold text-xl mb-3">mTLS Handshake Load</h3>
+                    <p class="text-army-100/55 text-sm leading-relaxed">Istio/Linkerd service meshes perform millions of ephemeral key and nonce generations per second. Software PRNGs introduce latency spikes and duplicate-key risks.</p>
+                </div>
+                <div class="glass-card rounded-xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-lg bg-army-600/20 border border-army-500/30 flex items-center justify-center mb-5">
+                        <svg class="w-6 h-6 text-army-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <h3 class="heading-font text-parchment font-semibold text-xl mb-3">PQC Seed Sensitivity</h3>
+                    <p class="text-army-100/55 text-sm leading-relaxed">FIPS 203 (ML-KEM) and FIPS 204 (ML-DSA) are structurally more sensitive to seed bias. Correlated lattice noise enables SVP secret recovery; rejection sampling leaks private keys.</p>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 section-divider"></div>
+    </section>
+
+    <section id="market" class="py-24 px-6 relative" style="background: linear-gradient(180deg, #171d10 0%, #1b2213 50%, #171d10 100%);">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brass-400 text-[11px] font-semibold tracking-[0.25em] uppercase">Market Sizing 2026–2032</span>
+                <h2 class="heading-font text-4xl md:text-5xl font-bold text-parchment mt-3 mb-5">A <span class="text-gradient-brass">$320.5M</span> SOM by 2032</h2>
+                <div class="brass-rule w-20 mx-auto mb-6"></div>
+                <p class="text-army-100/65 text-[15px]">Three-tier valuation anchored on global TRNG/QRNG adoption, EaaS transition, and PQC root-key orchestration mandates.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 mb-14">
+                <div class="glass-card rounded-xl p-8 relative overflow-hidden reveal">
+                    <div class="absolute top-0 right-0 w-28 h-28 rounded-bl-full" style="background: radial-gradient(circle at top right, rgba(107,127,69,0.15), transparent 70%);"></div>
+                    <div class="text-[10px] font-semibold text-army-200/60 uppercase tracking-[0.2em] mb-2">TAM</div>
+                    <div class="heading-font text-4xl font-bold text-parchment mb-1">$9.19B</div>
+                    <div class="text-[13px] text-army-100/60 mb-5">2032 · Global TRNG/QRNG + Cloud Entropy</div>
+                    <div class="h-1.5 bg-army-900/80 rounded-full overflow-hidden"><div class="h-full bg-army-500 rounded-full" style="width:100%"></div></div>
+                    <div class="text-[11px] text-army-200/50 mt-2.5">CAGR 10.98% (2026–32)</div>
+                </div>
+                <div class="glass-card rounded-xl p-8 relative overflow-hidden reveal">
+                    <div class="absolute top-0 right-0 w-28 h-28 rounded-bl-full" style="background: radial-gradient(circle at top right, rgba(200,146,30,0.12), transparent 70%);"></div>
+                    <div class="text-[10px] font-semibold text-army-200/60 uppercase tracking-[0.2em] mb-2">SAM</div>
+                    <div class="heading-font text-4xl font-bold text-parchment mb-1">$2.62B</div>
+                    <div class="text-[13px] text-army-100/60 mb-5">2032 · DC EaaS + Cloud KMS + PQC Orchestration</div>
+                    <div class="h-1.5 bg-army-900/80 rounded-full overflow-hidden"><div class="h-full bg-brass-600 rounded-full" style="width:28.5%"></div></div>
+                    <div class="text-[11px] text-army-200/50 mt-2.5">CAGR 20.64% (2026–32)</div>
+                </div>
+                <div class="glass-card rounded-xl p-8 relative overflow-hidden reveal" style="border-color: rgba(233,196,82,0.4); box-shadow: 0 0 44px -14px rgba(200,146,30,0.28);">
+                    <div class="absolute top-0 right-0 w-28 h-28 rounded-bl-full" style="background: radial-gradient(circle at top right, rgba(233,196,82,0.18), transparent 70%);"></div>
+                    <div class="text-[10px] font-semibold text-brass-400 uppercase tracking-[0.2em] mb-2">SOM · Sonicium Target</div>
+                    <div class="heading-font text-4xl font-bold text-parchment mb-1">$320.5M</div>
+                    <div class="text-[13px] text-army-100/60 mb-5">2032 · Quantum-seeded API &amp; buffered gateway</div>
+                    <div class="h-1.5 bg-army-900/80 rounded-full overflow-hidden"><div class="h-full rounded-full shimmer" style="width:100%; background-image: linear-gradient(90deg,#c8921e,#e9c452,#c8921e); background-size:200% 100%;"></div></div>
+                    <div class="text-[11px] text-brass-300/90 mt-2.5 font-medium">CAGR 39.18% (2026–32)</div>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-6 md:p-9 reveal">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-9">
+                    <div>
+                        <h3 class="heading-font text-parchment font-semibold text-xl">SOM Revenue Projection</h3>
+                        <p class="text-army-200/50 text-[13px]">2026–2032 · USD millions</p>
+                    </div>
+                    <span class="text-[11px] bg-brass-900/40 text-brass-300 px-3.5 py-1.5 rounded-full border border-brass-600/30 tracking-wide font-medium">39.18% CAGR</span>
+                </div>
+                <div class="flex items-end justify-between gap-2.5 md:gap-4 h-52">
+                    <div class="flex flex-col items-center flex-1"><div class="chart-bar w-full rounded-t-sm" style="height:14%; background:linear-gradient(180deg,#546536,#414f2c);"></div><span class="text-[10px] text-army-200/60 mt-2.5 font-medium">'26</span><span class="text-[10px] text-army-200/40">45</span></div>
+                    <div class="flex flex-col items-center flex-1"><div class="chart-bar w-full rounded-t-sm" style="height:22%; background:linear-gradient(180deg,#6b7f45,#546536);"></div><span class="text-[10px] text-army-200/60 mt-2.5 font-medium">'27</span><span class="text-[10px] text-army-200/40">~63</span></div>
+                    <div class="flex flex-col items-center flex-1"><div class="chart-bar w-full rounded-t-sm" style="height:28%; background:linear-gradient(180deg,#889c5e,#6b7f45);"></div><span class="text-[10px] text-army-200/60 mt-2.5 font-medium">'28</span><span class="text-[10px] text-army-200/40">88</span></div>
+                    <div class="flex flex-col items-center flex-1"><div class="chart-bar w-full rounded-t-sm" style="height:38%; background:linear-gradient(180deg,#a87216,#855415);"></div><span class="text-[10px] text-army-200/60 mt-2.5 font-medium">'29</span><span class="text-[10px] text-army-200/40">~123</span></div>
+                    <div class="flex flex-col items-center flex-1"><div class="chart-bar w-full rounded-t-sm" style="height:57%; background:linear-gradient(180deg,#c8921e,#a87216);"></div><span class="text-[10px] text-army-200/60 mt-2.5 font-medium">'30</span><span class="text-[10px] text-army-200/40">182</span></div>
+                    <div class="flex flex-col items-center flex-1"><div class="chart-bar w-full rounded-t-sm" style="height:76%; background:linear-gradient(180deg,#e0ad2c,#c8921e);"></div><span class="text-[10px] text-army-200/60 mt-2.5 font-medium">'31</span><span class="text-[10px] text-army-200/40">~242</span></div>
+                    <div class="flex flex-col items-center flex-1"><div class="chart-bar w-full rounded-t-sm shimmer" style="height:100%; background-image: linear-gradient(180deg,#e9c452,#c8921e); background-size:100% 200%;"></div><span class="text-[10px] text-brass-300 mt-2.5 font-semibold">'32</span><span class="text-[10px] text-brass-400 font-semibold">320.5</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 section-divider"></div>
+    </section>
+
+    <!-- ========== TECHNOLOGY / COMPETITIVE EDGE ========== -->
+    <section id="technology" class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
+                <div class="reveal">
+                    <span class="text-brass-400 text-[11px] font-semibold tracking-[0.25em] uppercase">Architectural Differentiation</span>
+                    <h2 class="heading-font text-4xl md:text-5xl font-bold text-parchment mt-3 mb-5">Hybrid DRBG.<br><span class="text-gradient-brass">Provenance Included.</span></h2>
+                    <div class="brass-rule w-20 mb-6"></div>
+                    <p class="text-army-100/65 text-[15px] leading-relaxed mb-9">
+                        Pure quantum stream solutions cap at ~1 Gbps — insufficient for hyperscale mTLS. Sonicium's NIST SP 800-90A hybrid model reseeds a CTR-DRBG-AES-256 with a fresh 512-bit quantum seed every 10,000 requests, delivering up to 18,026 Mbps without sacrificing cryptographic uncertainty. Every response carries the Q135/Q63 register identifier, DRBG algorithm, and health-check status via <code class="text-brass-300 text-xs bg-army-900/60 px-1.5 py-0.5 rounded">X-Sonicium-*</code> headers.
+                    </p>
+                    <div class="space-y-5">
+                        <div class="flex items-start gap-4">
+                            <div class="w-9 h-9 rounded-md bg-brass-600/15 border border-brass-600/25 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-brass-300 text-sm font-bold heading-font">I</span></div>
+                            <div>
+                                <h4 class="text-parchment font-semibold text-[15px]">Von Neumann + Toeplitz Extractor</h4>
+                                <p class="text-army-100/55 text-sm mt-1">Dual-stage debiasing and extraction pipeline with min-entropy 0.99998, validated against full NIST SP 800-90B suite.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-9 h-9 rounded-md bg-brass-600/15 border border-brass-600/25 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-brass-300 text-sm font-bold heading-font">II</span></div>
+                            <div>
+                                <h4 class="text-parchment font-semibold text-[15px]">Execution Provenance · Zero Duplicate Payloads</h4>
+                                <p class="text-army-100/55 text-sm mt-1">IBM job ID, Q135/Q63 register metadata, RCT/APT health status bound to each API call. Internal test: 0 duplicate 256-bit payloads across 8,696 valid samples.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-9 h-9 rounded-md bg-brass-600/15 border border-brass-600/25 flex items-center justify-center flex-shrink-0 mt-0.5"><span class="text-brass-300 text-sm font-bold heading-font">III</span></div>
+                            <div>
+                                <h4 class="text-parchment font-semibold text-[15px]">Additional Input Mode (NIST 800-90A/C)</h4>
+                                <p class="text-army-100/55 text-sm mt-1">Inject quantum seeds into existing FIPS-validated DRBGs without breaking compliance boundaries. Pool empty returns typed error, never weaker fallback bytes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl overflow-hidden reveal">
+                    <div class="p-5 border-b border-brass-600/15 flex items-center justify-between">
+                        <h3 class="heading-font text-parchment font-semibold text-lg">Full Competitive Matrix</h3>
+                        <span class="text-[10px] tracking-[0.2em] uppercase text-army-200/50">NIST + Internal Data</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="text-army-200/50 text-[10px] uppercase tracking-[0.12em] border-b border-brass-600/10">
+                                    <th class="text-left p-3.5 font-semibold">Parameter</th>
+                                    <th class="text-left p-3.5 font-semibold text-brass-300">Sonicium 135Q</th>
+                                    <th class="text-left p-3.5 font-semibold">Sonicium 63Q</th>
+                                    <th class="text-left p-3.5 font-semibold">IDQ Quantis PCIe</th>
+                                    <th class="text-left p-3.5 font-semibold">Quintessence qStream</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-brass-600/10">
+                                <tr>
+                                    <td class="p-3.5 text-army-200/60 text-[12px]">Speed (Mbps)</td>
+                                    <td class="p-3.5 text-brass-200 font-medium text-[12px]">18,026</td>
+                                    <td class="p-3.5 text-brass-200 font-medium text-[12px]">4,000</td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">240</td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">100</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3.5 text-army-200/60 text-[12px]">Speed vs. QRNG Avg</td>
+                                    <td class="p-3.5 text-brass-300 font-medium text-[12px]">75x</td>
+                                    <td class="p-3.5 text-brass-300 font-medium text-[12px]">16x</td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">1x</td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">0.4x</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3.5 text-army-200/60 text-[12px]">Entropy Source</td>
+                                    <td class="p-3.5 text-brass-200 text-[12px]">Quantum Qubit</td>
+                                    <td class="p-3.5 text-brass-200 text-[12px]">Quantum Qubit</td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">QRNG</td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">QRNG</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3.5 text-army-200/60 text-[12px]">NIST 800-22 Pass Rate</td>
+                                    <td class="p-3.5"><span class="pass-badge">100%</span></td>
+                                    <td class="p-3.5"><span class="pass-badge">100%</span></td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">95%</td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">92%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3.5 text-army-200/60 text-[12px]">NIST 800-90B</td>
+                                    <td class="p-3.5"><span class="pass-badge">Full</span></td>
+                                    <td class="p-3.5"><span class="pass-badge">Full</span></td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">Partial</td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">Partial</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3.5 text-army-200/60 text-[12px]">FIPS 140-3</td>
+                                    <td class="p-3.5"><span class="pass-badge">Yes</span></td>
+                                    <td class="p-3.5"><span class="pass-badge">Yes</span></td>
+                                    <td class="p-3.5"><span class="fail-badge">No</span></td>
+                                    <td class="p-3.5"><span class="fail-badge">No</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3.5 text-army-200/60 text-[12px]">Post-Quantum Ready</td>
+                                    <td class="p-3.5 text-army-300 font-medium text-[12px]">Native</td>
+                                    <td class="p-3.5 text-brass-300 text-[12px]">Optional</td>
+                                    <td class="p-3.5"><span class="fail-badge">No</span></td>
+                                    <td class="p-3.5"><span class="fail-badge">No</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3.5 text-army-200/60 text-[12px]">Redundant Core</td>
+                                    <td class="p-3.5"><span class="pass-badge">Yes</span></td>
+                                    <td class="p-3.5 text-brass-300 text-[12px]">Optional</td>
+                                    <td class="p-3.5"><span class="fail-badge">No</span></td>
+                                    <td class="p-3.5"><span class="fail-badge">No</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3.5 text-army-200/60 text-[12px]">Entropy Grade</td>
+                                    <td class="p-3.5 text-brass-300 font-bold text-[13px]">A+</td>
+                                    <td class="p-3.5 text-brass-200 font-bold text-[12px]">A</td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">A</td>
+                                    <td class="p-3.5 text-army-100/50 text-[12px]">B+</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 border-t border-brass-600/15 text-center">
+                        <p class="text-[12px] text-army-100/50">Sonicium 135Q: <span class="text-brass-300 font-semibold">75x faster</span>, 100% NIST pass rate, FIPS 140-3 &amp; Post-Quantum ready</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 section-divider"></div>
+    </section>
+
+    <!-- ========== VALIDATION / FULL TEST DATA ========== -->
+    <section id="validation" class="py-24 px-6 relative" style="background: linear-gradient(180deg, #171d10 0%, #1b2213 100%);">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brass-400 text-[11px] font-semibold tracking-[0.25em] uppercase">NIST Certification &amp; Test Results</span>
+                <h2 class="heading-font text-4xl md:text-5xl font-bold text-parchment mt-3 mb-5">100% NIST SP 800-22 &amp; 800-90B Compliant</h2>
+                <div class="brass-rule w-20 mx-auto mb-6"></div>
+                <p class="text-army-100/65 text-[15px] leading-relaxed">
+                    Complete validation across all major cryptographic standards and quality parameters. Full technical report available at <a href="https://soniciumquantumlab.github.io/135-Qubit-Entropy-Engine/" target="_blank" class="text-brass-400 hover:text-brass-300 underline underline-offset-2">soniciumquantumlab.github.io/135-Qubit-Entropy-Engine</a>.
+                </p>
+            </div>
+
+            <!-- Top-level stats -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                <div class="glass-card rounded-xl p-6 reveal">
+                    <div class="text-[10px] text-army-200/50 uppercase tracking-[0.15em] mb-2">NIST 800-22 Pass Rate</div>
+                    <div class="heading-font text-3xl font-bold text-brass-300">100%</div>
+                    <div class="text-[11px] text-army-200/40 mt-1">15/15 statistical tests passed</div>
+                </div>
+                <div class="glass-card rounded-xl p-6 reveal">
+                    <div class="text-[10px] text-army-200/50 uppercase tracking-[0.15em] mb-2">Min-Entropy (800-90B)</div>
+                    <div class="heading-font text-3xl font-bold text-parchment">0.99998</div>
+                    <div class="text-[11px] text-army-200/40 mt-1">Shannon: 0.9999998</div>
+                </div>
+                <div class="glass-card rounded-xl p-6 reveal">
+                    <div class="text-[10px] text-army-200/50 uppercase tracking-[0.15em] mb-2">Bit Balance (0/1)</div>
+                    <div class="heading-font text-3xl font-bold text-parchment">50.03% / 49.97%</div>
+                    <div class="text-[11px] text-army-200/40 mt-1">Block balance: 50.12% ± 1.2%</div>
+                </div>
+                <div class="glass-card rounded-xl p-6 reveal">
+                    <div class="text-[10px] text-army-200/50 uppercase tracking-[0.15em] mb-2">Duplicate Payloads</div>
+                    <div class="heading-font text-3xl font-bold text-brass-300">0 / 8,696</div>
+                    <div class="text-[11px] text-army-200/40 mt-1">256-bit payload analysis</div>
+                </div>
+            </div>
+
+            <!-- NIST SP 800-22 Test Table -->
+            <div class="glass-card rounded-xl overflow-hidden mb-8 reveal">
+                <div class="p-5 border-b border-brass-600/15 flex items-center justify-between">
+                    <h3 class="heading-font text-parchment font-semibold text-lg">NIST SP 800-22 Statistical Test Suite (15 Tests)</h3>
+                    <span class="text-[10px] tracking-[0.15em] uppercase text-army-200/50">Q135 Register</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-army-200/50 text-[10px] uppercase tracking-[0.12em] border-b border-brass-600/10">
+                                <th class="text-left p-3.5 font-semibold">Test Name</th>
+                                <th class="text-left p-3.5 font-semibold">Requirement</th>
+                                <th class="text-left p-3.5 font-semibold">Sonicium Q135</th>
+                                <th class="text-left p-3.5 font-semibold">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-brass-600/10">
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Frequency (Monobit)</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.6334</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Block Frequency (M=128)</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.3401</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Runs Test</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.7134</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Longest Run (M=10000)</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.1997</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Spectral (DFT)</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.7303</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Non-Overlapping Template</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.6214</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Overlapping Template</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.5489</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Maurer's Universal</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.4872</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Linear Complexity</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.5123</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Serial Test (m=16)</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.7125</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Approximate Entropy (m=10)</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.4109</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Cumulative Sums (Forward)</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.8225</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Cumulative Sums (Backward)</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.5089</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Random Excursion</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.5764</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">Random Excursion Variant</td><td class="p-3 text-army-200/50 text-[12px]">&gt; 0.01</td><td class="p-3 text-brass-200 text-[12px]">0.6298</td><td class="p-3"><span class="pass-badge">PASS</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-4 border-t border-brass-600/15">
+                    <p class="text-[12px] text-army-100/50">100% of NIST SP 800-22 tests passed. Average p-value: <span class="text-brass-300 font-medium">0.58</span> (Threshold: 0.01)</p>
+                </div>
+            </div>
+
+            <!-- NIST SP 800-90B & Data Quality -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glass-card rounded-xl p-6 reveal">
+                    <h3 class="heading-font text-parchment font-semibold text-lg mb-4">NIST SP 800-90B Entropy Validation</h3>
+                    <div class="space-y-2.5">
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Min-Entropy</span><span class="text-brass-200 font-medium text-[13px]">0.99998 <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Shannon Entropy</span><span class="text-brass-200 font-medium text-[13px]">0.9999998 <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Markov Estimate</span><span class="text-brass-200 font-medium text-[13px]">0.9999 <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Conditional Min-Entropy</span><span class="text-brass-200 font-medium text-[13px]">0.9997 <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Run Count Test (RCT)</span><span class="pass-badge">PASSED</span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Approximate Entropy Test (APT)</span><span class="pass-badge">PASSED</span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Adaptive Propagated State</span><span class="pass-badge">PASSED</span></div>
+                        <div class="flex items-center justify-between py-2"><span class="text-army-100/60 text-[13px]">Repetition Count Test</span><span class="pass-badge">PASSED</span></div>
+                    </div>
+                </div>
+                <div class="glass-card rounded-xl p-6 reveal">
+                    <h3 class="heading-font text-parchment font-semibold text-lg mb-4">Data Quality Parameters</h3>
+                    <div class="space-y-2.5">
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Bit Balance (0/1)</span><span class="text-brass-200 font-medium text-[13px]">50.03% / 49.97% <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Block Balance (128-bit)</span><span class="text-brass-200 font-medium text-[13px]">50.12% ± 1.2% <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Duplicate Payload (256-bit)</span><span class="text-brass-200 font-medium text-[13px]">0 / 8,696 <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Autocorrelation (Lag-1)</span><span class="text-brass-200 font-medium text-[13px]">0.0003 <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Autocorrelation (Lag-2)</span><span class="text-brass-200 font-medium text-[13px]">-0.0007 <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Avg Response Latency</span><span class="text-brass-200 font-medium text-[13px]">12ms <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2 border-b border-brass-600/10"><span class="text-army-100/60 text-[13px]">Throughput</span><span class="text-brass-200 font-medium text-[13px]">2.2 GB/s <span class="pass-badge ml-2">PASS</span></span></div>
+                        <div class="flex items-center justify-between py-2"><span class="text-army-100/60 text-[13px]">Availability</span><span class="text-brass-200 font-medium text-[13px]">99.99% <span class="pass-badge ml-2">PASS</span></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- International Standards -->
+            <div class="glass-card rounded-xl p-6 mt-8 reveal">
+                <h3 class="heading-font text-parchment font-semibold text-lg mb-4">International Standards Compliance</h3>
+                <div class="flex flex-wrap gap-3">
+                    <span class="test-badge bg-army-800 text-army-200 border border-army-600/40">NIST 800-22 · COMPLIANT</span>
+                    <span class="test-badge bg-army-800 text-army-200 border border-army-600/40">NIST 800-90B · COMPLIANT</span>
+                    <span class="test-badge bg-army-800 text-army-200 border border-army-600/40">FIPS 140-3 · COMPLIANT</span>
+                    <span class="test-badge bg-army-800 text-army-200 border border-army-600/40">PCI-DSS · COMPLIANT</span>
+                    <span class="test-badge bg-army-800 text-army-200 border border-army-600/40">GDPR · COMPLIANT</span>
+                    <span class="test-badge bg-army-800 text-army-200 border border-army-600/40">HIPAA · COMPLIANT</span>
+                    <span class="test-badge bg-army-800 text-army-200 border border-army-600/40">ISO 27001 · COMPLIANT</span>
+                    <span class="test-badge bg-brass-900/50 text-brass-300 border border-brass-600/30">Common Criteria · IN PROGRESS</span>
+                </div>
+            </div>
+
+            <!-- Sample Test Results Table -->
+            <div class="glass-card rounded-xl overflow-hidden mt-8 reveal">
+                <div class="p-5 border-b border-brass-600/15">
+                    <h3 class="heading-font text-parchment font-semibold text-lg">Q135 Entropy Quality · Sample Test Results</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-army-200/50 text-[10px] uppercase tracking-[0.12em] border-b border-brass-600/10">
+                                <th class="text-left p-3.5 font-semibold">#</th>
+                                <th class="text-left p-3.5 font-semibold">Size</th>
+                                <th class="text-left p-3.5 font-semibold">Format</th>
+                                <th class="text-left p-3.5 font-semibold">Balance</th>
+                                <th class="text-left p-3.5 font-semibold">Entropy</th>
+                                <th class="text-left p-3.5 font-semibold">RCT</th>
+                                <th class="text-left p-3.5 font-semibold">APT</th>
+                                <th class="text-left p-3.5 font-semibold">Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-brass-600/10">
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">1</td><td class="p-3 text-army-100/60 text-[12px]">64B</td><td class="p-3 text-army-100/60 text-[12px]">Hex</td><td class="p-3 text-brass-200 text-[12px]">50.00%</td><td class="p-3 text-brass-200 text-[12px]">1.0000</td><td class="p-3"><span class="pass-badge">PASS</span></td><td class="p-3"><span class="pass-badge">PASS</span></td><td class="p-3 text-brass-300 font-bold text-[12px]">A+</td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">2</td><td class="p-3 text-army-100/60 text-[12px]">64B</td><td class="p-3 text-army-100/60 text-[12px]">Base64</td><td class="p-3 text-brass-200 text-[12px]">50.39%</td><td class="p-3 text-brass-200 text-[12px]">0.9999</td><td class="p-3"><span class="pass-badge">PASS</span></td><td class="p-3"><span class="pass-badge">PASS</span></td><td class="p-3 text-brass-200 font-bold text-[12px]">A</td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">3</td><td class="p-3 text-army-100/60 text-[12px]">32B</td><td class="p-3 text-army-100/60 text-[12px]">Base64</td><td class="p-3 text-brass-200 text-[12px]">51.56%</td><td class="p-3 text-brass-200 text-[12px]">0.9992</td><td class="p-3"><span class="pass-badge">PASS</span></td><td class="p-3"><span class="pass-badge">PASS</span></td><td class="p-3 text-brass-200 font-bold text-[12px]">A</td></tr>
+                            <tr><td class="p-3 text-army-100/60 text-[12px]">4</td><td class="p-3 text-army-100/60 text-[12px]">32B</td><td class="p-3 text-army-100/60 text-[12px]">Hex</td><td class="p-3 text-brass-200 text-[12px]">52.34%</td><td class="p-3 text-brass-200 text-[12px]">0.9985</td><td class="p-3"><span class="pass-badge">PASS</span></td><td class="p-3"><span class="pass-badge">PASS</span></td><td class="p-3 text-brass-200 font-bold text-[12px]">A-</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center reveal">
+                <a href="https://soniciumquantumlab.github.io/135-Qubit-Entropy-Engine/" target="_blank" class="glass-light hover:bg-white/5 text-brass-300 font-semibold px-8 py-3 rounded-md transition border border-brass-600/30 text-sm inline-flex items-center gap-2">
+                    View Full Technical Report on GitHub
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 section-divider"></div>
+    </section>
+
+    <!-- ========== ROADMAP ========== -->
+    <section id="roadmap" class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brass-400 text-[11px] font-semibold tracking-[0.25em] uppercase">TRL-4 → TRL-9</span>
+                <h2 class="heading-font text-4xl md:text-5xl font-bold text-parchment mt-3 mb-5">Certification &amp; Regulatory Roadmap</h2>
+                <div class="brass-rule w-20 mx-auto mb-6"></div>
+                <p class="text-army-100/65 text-[15px]">A phased path from internal validation to FIPS 140-3 Level 3 and hyperscaler marketplace listings.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="glass-card rounded-xl p-6 reveal" style="border-left: 3px solid #6b7f45;">
+                    <span class="text-[10px] font-bold text-army-300 tracking-[0.15em] uppercase">2026 H2 · TRL-5/6</span>
+                    <h3 class="heading-font text-parchment font-semibold text-lg mt-3 mb-3">Foundation</h3>
+                    <ul class="text-army-100/55 text-[13px] space-y-2 leading-relaxed">
+                        <li>— Phase-2 production gateway</li>
+                        <li>— Multi-region redundancy</li>
+                        <li>— ISO 27001:2022</li>
+                        <li>— SOC 2 Type II prep</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-xl p-6 reveal" style="border-left: 3px solid #a87216;">
+                    <span class="text-[10px] font-bold text-brass-400 tracking-[0.15em] uppercase">2027 H1 · TRL-7</span>
+                    <h3 class="heading-font text-parchment font-semibold text-lg mt-3 mb-3">Validation Testing</h3>
+                    <ul class="text-army-100/55 text-[13px] space-y-2 leading-relaxed">
+                        <li>— Alt QPU failover integration</li>
+                        <li>— NVLAP-accredited CSTL contract</li>
+                        <li>— On-prem gateway hardware</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-xl p-6 reveal" style="border-left: 3px solid #c8921e;">
+                    <span class="text-[10px] font-bold text-brass-300 tracking-[0.15em] uppercase">2027 H2 · TRL-8</span>
+                    <h3 class="heading-font text-parchment font-semibold text-lg mt-3 mb-3">ESV Certification</h3>
+                    <ul class="text-army-100/55 text-[13px] space-y-2 leading-relaxed">
+                        <li>— <strong class="text-brass-300">NIST SP 800-90B ESV</strong></li>
+                        <li>— NIST SP 800-90C Enhanced-NRBG</li>
+                        <li>— Tier-1 commercial rollout</li>
+                    </ul>
+                </div>
+                <div class="glass-card rounded-xl p-6 reveal" style="border-left: 3px solid #e9c452; box-shadow: 0 0 40px -14px rgba(233,196,82,0.3);">
+                    <span class="text-[10px] font-bold text-brass-200 tracking-[0.15em] uppercase">2028 · TRL-9</span>
+                    <h3 class="heading-font text-parchment font-semibold text-lg mt-3 mb-3">FIPS 140-3 L3</h3>
+                    <ul class="text-army-100/55 text-[13px] space-y-2 leading-relaxed">
+                        <li>— CMVP validation</li>
+                        <li>— Hyperscaler native integration</li>
+                        <li>— US &amp; NATO sovereign markets</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 section-divider"></div>
+    </section>
+
+    <!-- ========== NEWS ========== -->
+    <section id="news" class="py-24 px-6 relative" style="background: linear-gradient(180deg, #171d10 0%, #1b2213 100%);">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 reveal">
+                <div>
+                    <span class="text-brass-400 text-[11px] font-semibold tracking-[0.25em] uppercase">Global PQC Landscape</span>
+                    <h2 class="heading-font text-4xl md:text-5xl font-bold text-parchment mt-3">Recent Developments</h2>
+                    <div class="brass-rule w-20 mt-5"></div>
+                </div>
+                <p class="text-army-100/55 text-[13px] mt-4 md:mt-0 max-w-md leading-relaxed">Curated signals from the post-quantum cryptography transition — regulatory milestones, standardization, and adoption trends.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="news-card glass-card rounded-xl p-6 flex flex-col reveal">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-[9px] font-semibold bg-brass-900/50 text-brass-300 px-2.5 py-1 rounded-full border border-brass-700/30 tracking-wider uppercase">Regulation</span>
+                        <span class="text-[10px] text-army-200/40">Oct 2026</span>
+                    </div>
+                    <h3 class="heading-font text-parchment font-semibold text-[17px] leading-snug mb-3">Vietnam Announces 3 Draft National PQC Standards</h3>
+                    <p class="text-army-100/55 text-[13px] leading-relaxed flex-1">
+                        Vietnam's Government Cipher Committee published draft TCVN standards for HB-PQSign, ML-KEM, and ML-DSA, targeting 100% quantum-resistant migration of critical systems by 2035. The roadmap explicitly identifies "harvest now, decrypt later" as a present threat, with PQC as the primary solution and QKD reserved for selective critical networks. Feedback from experts and industry is being solicited through official portals.
+                    </p>
+                    <a href="https://www.vietnam.vn/en/viet-nam-cong-bo-3-du-thao-tieu-chuan-mat-ma-hau-luong-tu" target="_blank" class="text-brass-400 text-[13px] font-medium mt-4 hover:text-brass-300 transition inline-flex items-center gap-1">Source: Vietnam.vn →</a>
+                </div>
+                <div class="news-card glass-card rounded-xl p-6 flex flex-col reveal">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-[9px] font-semibold bg-army-800/60 text-army-300 px-2.5 py-1 rounded-full border border-army-600/40 tracking-wider uppercase">Migration</span>
+                        <span class="text-[10px] text-army-200/40">Oct 2026</span>
+                    </div>
+                    <h3 class="heading-font text-parchment font-semibold text-[17px] leading-snug mb-3">Singapore Sets 2031 Quantum-Safe Deadline for CII</h3>
+                    <p class="text-army-100/55 text-[13px] leading-relaxed flex-1">
+                        The Cyber Security Agency of Singapore (CSA) issued binding migration guidance: Critical Information Infrastructure systems must complete quantum-safe migration by 2031, with other exposed organizations encouraged to finish by 2035. A S$ quantum-safe kickstarter grant was launched to fund pilot deployments. CSA emphasized that cryptographic discovery, inventory, and legacy OT migration are priority use cases for early adopters.
+                    </p>
+                    <a href="https://www.csa.gov.sg/news-events/press-releases/csa-sets-out-quantum-safe-migration-timeline-for-organisations-and-launches-new-grant/" target="_blank" class="text-brass-400 text-[13px] font-medium mt-4 hover:text-brass-300 transition inline-flex items-center gap-1">Source: CSA Singapore →</a>
+                </div>
+                <div class="news-card glass-card rounded-xl p-6 flex flex-col reveal">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-[9px] font-semibold bg-brass-900/50 text-brass-300 px-2.5 py-1 rounded-full border border-brass-700/30 tracking-wider uppercase">Standardization</span>
+                        <span class="text-[10px] text-army-200/40">May 2026</span>
+                    </div>
+                    <h3 class="heading-font text-parchment font-semibold text-[17px] leading-snug mb-3">NIST Advances Nine Candidates for Additional PQC Signatures</h3>
+                    <p class="text-army-100/55 text-[13px] leading-relaxed flex-1">
+                        NIST selected nine digital signature algorithms — including FAEST, MAYO, SQIsign, and UOV — for the third round of its additional PQC standardization process. The evaluation will last approximately two years, with updates expected before the 7th NIST PQC Conference in 2027. Notably, HAWK was withdrawn after Anthropic's AI model discovered a mathematical vulnerability, underscoring the rigor of cryptographic review in the AI era.
+                    </p>
+                    <a href="https://www.nist.gov/news-events/news/2026/05/nine-candidates-advance-third-round-additional-digital-signatures-pqc" target="_blank" class="text-brass-400 text-[13px] font-medium mt-4 hover:text-brass-300 transition inline-flex items-center gap-1">Source: NIST →</a>
+                </div>
+                <div class="news-card glass-card rounded-xl p-6 flex flex-col reveal">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-[9px] font-semibold bg-brass-900/50 text-brass-300 px-2.5 py-1 rounded-full border border-brass-700/30 tracking-wider uppercase">Adoption</span>
+                        <span class="text-[10px] text-army-200/40">Oct 2026</span>
+                    </div>
+                    <h3 class="heading-font text-parchment font-semibold text-[17px] leading-snug mb-3">F5 Labs: Critical Infrastructure Sectors Lag on PQC Readiness</h3>
+                    <p class="text-army-100/55 text-[13px] leading-relaxed flex-1">
+                        A scan of the top 1 million websites found global PQC adoption at 54%, but critical sectors trail significantly: oil &amp; gas at 34%, telecom at 35%, and government at 35%. The report notes that removing Cloudflare-hosted domains drops global adoption to 22%, revealing deep reliance on edge providers for quantum readiness. 11% of sites still lack TLS 1.3 support entirely, making PQC migration impossible without rearchitecting.
+                    </p>
+                    <a href="https://digitalisationworld.com/news/24349-oil-gas-and-telecoms-lag-on-quantum-resistant-encryption-f5-labs-finds" target="_blank" class="text-brass-400 text-[13px] font-medium mt-4 hover:text-brass-300 transition inline-flex items-center gap-1">Source: Digitalisation World →</a>
+                </div>
+                <div class="news-card glass-card rounded-xl p-6 flex flex-col reveal">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-[9px] font-semibold bg-army-800/60 text-army-300 px-2.5 py-1 rounded-full border border-army-600/40 tracking-wider uppercase">Defense</span>
+                        <span class="text-[10px] text-army-200/40">Oct 2026</span>
+                    </div>
+                    <h3 class="heading-font text-parchment font-semibold text-[17px] leading-snug mb-3">Airbus Demonstrates Live Quantum-Secure Tactical Network</h3>
+                    <p class="text-army-100/55 text-[13px] leading-relaxed flex-1">
+                        Airbus Defence and Space successfully demonstrated a quantum-secure tactical communications network combining PQC and QKD across multiple nodes in a live military exercise in Malta. The trial integrated dynamic key management and software-defined networking, proving that mission-critical data can be protected against both current and future quantum threats without disrupting live operations. The architecture directly counters harvest-now-decrypt-later scenarios.
+                    </p>
+                    <a href="https://www.criticalcomms.com.au/content/industry/news/airbus-demos-quantum-secure-comms-in-live-tactical-operations-500720272" target="_blank" class="text-brass-400 text-[13px] font-medium mt-4 hover:text-brass-300 transition inline-flex items-center gap-1">Source: Critical Comms →</a>
+                </div>
+                <div class="glass-card rounded-xl p-6 flex flex-col reveal" style="border-color: rgba(233,196,82,0.35); background: linear-gradient(160deg, rgba(200,146,30,0.08), rgba(23,29,16,0.4));">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-[9px] font-semibold bg-brass-600/25 text-brass-200 px-2.5 py-1 rounded-full border border-brass-500/40 tracking-wider uppercase">Investor Relations</span>
+                    </div>
+                    <h3 class="heading-font text-parchment font-semibold text-[17px] leading-snug mb-3">Research &amp; Due-Diligence Enquiries</h3>
+                    <p class="text-army-100/60 text-[13px] leading-relaxed flex-1">
+                        For technical briefings, independent entropy validation reports, or institutional investor discussions, our research desk is available directly. Request the full NIST SP 800-22 / 800-90B test appendix and the current TRL-4 audit pack. Direct lines are open to accredited investors, retired defence personnel, and sovereign technology funds.
+                    </p>
+                    <a href="mailto:research@sonicium.ltd" class="btn-brass text-[13px] font-semibold mt-5 px-5 py-2.5 rounded-md inline-flex items-center justify-center gap-2">
+                        research@sonicium.ltd
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 section-divider"></div>
+    </section>
+
+    <!-- ========== PRODUCTS (NO PRICING) ========== -->
+    <section id="products" class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brass-400 text-[11px] font-semibold tracking-[0.25em] uppercase">Flagship Products</span>
+                <h2 class="heading-font text-4xl md:text-5xl font-bold text-parchment mt-3 mb-5">Quantum Entropy Engine</h2>
+                <div class="brass-rule w-20 mx-auto mb-6"></div>
+                <p class="text-army-100/65 text-[15px]">Two grades designed for enterprise architectures.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="glass-card rounded-xl p-8 reveal">
+                    <div class="text-[10px] font-semibold text-army-300 tracking-[0.2em] uppercase mb-2">Standard</div>
+                    <div class="heading-font text-5xl font-bold text-parchment mb-1">63Q</div>
+                    <div class="text-[13px] text-army-100/50 mb-6">63 Qubit · Enterprise-Grade Entropy Source</div>
+                    <ul class="space-y-3 text-[13px] text-army-100/60">
+                        <li class="flex items-center gap-2"><span class="text-brass-400">✓</span> 500 MB/s True Random Data</li>
+                        <li class="flex items-center gap-2"><span class="text-brass-400">✓</span> NIST SP 800-90B Compliant</li>
+                        <li class="flex items-center gap-2"><span class="text-brass-400">✓</span> 25W Low Power</li>
+                        <li class="flex items-center gap-2"><span class="text-brass-400">✓</span> FIPS 140-3 Certified</li>
+                    </ul>
+                    <a href="mailto:research@sonicium.ltd" class="btn-brass font-semibold px-6 py-3 rounded-md inline-flex items-center justify-center gap-2 text-sm w-full mt-8">Enquire Now</a>
+                </div>
+                <div class="glass-card rounded-xl p-8 reveal" style="border-color: rgba(233,196,82,0.4); box-shadow: 0 0 44px -14px rgba(200,146,30,0.28);">
+                    <div class="text-[10px] font-semibold text-brass-400 tracking-[0.2em] uppercase mb-2">Premium</div>
+                    <div class="heading-font text-5xl font-bold text-parchment mb-1">135Q</div>
+                    <div class="text-[13px] text-army-100/50 mb-6">135 Qubit · High-End Enterprise Solution</div>
+                    <ul class="space-y-3 text-[13px] text-army-100/60">
+                        <li class="flex items-center gap-2"><span class="text-brass-400">✓</span> 2.2 GB/s True Random Data</li>
+                        <li class="flex items-center gap-2"><span class="text-brass-400">✓</span> Post-Quantum Crypto Ready</li>
+                        <li class="flex items-center gap-2"><span class="text-brass-400">✓</span> Redundant Core + Failover</li>
+                        <li class="flex items-center gap-2"><span class="text-brass-400">✓</span> FIPS 140-3 + Common Criteria</li>
+                    </ul>
+                    <a href="mailto:research@sonicium.ltd" class="btn-brass font-semibold px-6 py-3 rounded-md inline-flex items-center justify-center gap-2 text-sm w-full mt-8">Enquire Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 section-divider"></div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="py-20 px-6 relative" style="background: linear-gradient(180deg, #171d10 0%, #1c2416 100%);">
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-card rounded-2xl p-8 md:p-14 text-center reveal" style="border-color: rgba(233,196,82,0.35); box-shadow: 0 0 60px -20px rgba(200,146,30,0.3);">
+                <div class="text-[11px] font-semibold text-brass-400 tracking-[0.3em] uppercase mb-4">Institutional Access</div>
+                <h2 class="heading-font text-3xl md:text-4xl font-bold text-parchment mb-4">Bring Quantum Entropy to Your Enterprise</h2>
+                <div class="brass-rule w-20 mx-auto mb-6"></div>
+                <p class="text-army-100/60 mb-9 max-w-xl mx-auto text-[15px] leading-relaxed">63 Qubit or 135 Qubit — our experts will design the solution for your needs. Free consultation and whitepaper available on request.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="mailto:research@sonicium.ltd" class="btn-brass font-semibold px-8 py-3.5 rounded-md inline-flex items-center gap-2 text-sm">
+                        Free Consultation
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                    <a href="https://soniciumentropy.com/" target="_blank" class="glass-light hover:bg-white/5 text-parchment font-semibold px-8 py-3.5 rounded-md transition border text-sm inline-flex items-center gap-2">
+                        Download Whitepaper(Confidental-)
+                    </a>
+                </div>
+                <div class="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[12px] text-army-200/50">
+                    <span>📞 +880 1919 391942</span>
+                    <span class="w-px h-3.5 bg-brass-600/40 hidden sm:block"></span>
+                    <a href="mailto:ceo@sonicium.ltd" class="hover:text-brass-300 transition">ceo@sonicium.ltd</a>
+                    <span class="w-px h-3.5 bg-brass-600/40 hidden sm:block"></span>
+                    <span>5th Floor, Opolok, 225 Senpara Parbata Lane, Mirpur-10, Dhaka-1216, Bangladesh</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="border-t border-brass-600/15 py-14 px-6" style="background: #141a0e;">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-10 text-sm">
+                <div>
+                    <div class="flex items-center gap-2.5 mb-4">
+                        <div class="w-8 h-8 rounded-md flex items-center justify-center" style="background: linear-gradient(135deg, #414f2c, #2e3723); border: 1px solid rgba(200,146,30,0.45);">
+                            <span class="heading-font text-brass-300 font-bold text-sm">S</span>
+                        </div>
+                        <div>
+                            <span class="heading-font text-parchment font-semibold text-base">Sonicium Quantum Lab Ltd</span>
+                            <div class="text-[9px] tracking-[0.25em] uppercase text-army-300/60">Quantum Resilience</div>
+                        </div>
+                    </div>
+                    <p class="text-army-100/45 leading-relaxed text-[13px]">
+                        RJSC: C-214088/2026<br>
+                        Founded 2023 · Incorporated 2026<br>
+                        Chief Scientist &amp; Chairman: <span class="text-army-100/70">Hussain Billah</span><br>
+                        Bangladesh's First Quantum Computing Company
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-brass-300 font-semibold mb-4 text-[11px] tracking-[0.2em] uppercase">Links</h4>
+                    <ul class="space-y-2.5 text-army-100/50 text-[13px]">
+                        <li><a href="https://soniciumquantumlab.com" target="_blank" class="hover:text-brass-300 transition">Company Website</a></li>
+                        <li><a href="https://soniciumentropy.com/" target="_blank" class="hover:text-brass-300 transition">Product Website</a></li>
+                        <li><a href="https://soniciumquantumlab.github.io/135-Qubit-Entropy-Engine/" target="_blank" class="hover:text-brass-300 transition">Technical Report (GitHub)</a></li>
+                        <li><a href="#roadmap" class="hover:text-brass-300 transition">Certification Roadmap</a></li>
+                        <li><a href="#news" class="hover:text-brass-300 transition">PQC News</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-brass-300 font-semibold mb-4 text-[11px] tracking-[0.2em] uppercase">Contact</h4>
+                    <ul class="space-y-2.5 text-army-100/50 text-[13px]">
+                        <li>Phone: <a href="tel:+8801919391942" class="hover:text-brass-300 transition text-army-100/70">+880 1919 391942</a></li>
+                        <li>Research: <a href="mailto:research@sonicium.ltd" class="hover:text-brass-300 transition text-army-100/70">research@sonicium.ltd</a></li>
+                        <li>CEO: <a href="mailto:ceo@sonicium.ltd" class="hover:text-brass-300 transition text-army-100/70">ceo@sonicium.ltd</a></li>
+                        <li>API Access: <a href="https://soniciumentropy.com/" target="_blank" class="hover:text-brass-300 transition text-army-100/70">soniciumentropy.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-7 border-t border-brass-600/10 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px] text-army-100/30">
+                <span>© 2026 Sonicium Quantum Lab Ltd. All rights reserved.</span>
+                <span class="text-army-100/25">NIST · FIPS 140-3 · PCI-DSS · GDPR · HIPAA · ISO 27001</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        const revealEls = document.querySelectorAll('.reveal');
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
+                    const idx = siblings.indexOf(entry.target);
+                    entry.target.style.transitionDelay = (idx % 6) * 70 + 'ms';
+                    entry.target.classList.add('visible');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        revealEls.forEach(el => io.observe(el));
+
+        const chartBars = document.querySelectorAll('.chart-bar');
+        const chartObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bar = entry.target;
+                    const finalH = bar.style.height;
+                    bar.style.height = '0%';
+                    requestAnimationFrame(() => { setTimeout(() => { bar.style.height = finalH; }, 120); });
+                    chartObserver.unobserve(bar);
+                }
+            });
+        }, { threshold: 0.3 });
+        chartBars.forEach(bar => chartObserver.observe(bar));
+
+        const watermark = document.querySelector('.watermark');
+        if (watermark) {
+            window.addEventListener('scroll', () => {
+                watermark.style.transform = `translateY(${window.scrollY * 0.08}px)`;
+            }, { passive: true });
+        }
+    </script>
+</body>
+</html>
